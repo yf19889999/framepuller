@@ -14,7 +14,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        // 保留你的阿里云镜像加速
+        // 保留阿里云镜像加速
         maven { url 'https://maven.aliyun.com/repository/public' }
     }
 }
