@@ -16,21 +16,28 @@ jobs:
 
       - name: Install Gradle & Android SDK
         run: |
-          # 1. 下载并安装 Gradle (绕过 wrapper)
+          # 1. 下载并安装 Gradle 7.5 (绕过 wrapper)
           wget -q https://services.gradle.org/distributions/gradle-7.5-bin.zip
           unzip -q gradle-7.5-bin.zip -d /opt
           echo "PATH=/opt/gradle-7.5/bin:$PATH" >> $GITHUB_ENV
-          
-          # 2. 确认预装 SDK 路径 (ubuntu-latest 默认是 /usr/local/lib/android/sdk)
+
+          # 2. 配置 Android SDK 路径 (ubuntu-latest 预装)
           echo "ANDROID_HOME=/usr/local/lib/android/sdk" >> $GITHUB_ENV
           echo "ANDROID_SDK_ROOT=/usr/local/lib/android/sdk" >> $GITHUB_ENV
           
-          # 3. 安装必要的 SDK 组件 (适配 compileSdk 33)
-          /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager \
-            "platforms;android-33" "build-tools;33.0.2" "platform-tools"
+          # 3. 动态寻找 sdkmanager 并安装组件 (适配 compileSdk 33)
+          SDKMANAGER=$(find /usr/local/lib/android/sdk/cmdline-tools -name sdkmanager | head -n 1)
+          echo "使用 sdkmanager: $SDKMANAGER"
+          
+          # 自动同意协议 + 安装必要组件
+          yes | $SDKMANAGER --licenses > /dev/null 2>&1 || true
+          $SDKMANAGER "platforms;android-33" "build-tools;33.0.2" "platform-tools"
 
       - name: Build debug APK
         run: gradle assembleDebug --no-daemon
+        env:
+          ANDROID_HOME: /usr/local/lib/android/sdk
+          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
