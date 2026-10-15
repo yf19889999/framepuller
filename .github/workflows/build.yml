@@ -14,11 +14,23 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Install Gradle & Android SDK
+        run: |
+          # 1. 下载并安装 Gradle (绕过 wrapper)
+          wget -q https://services.gradle.org/distributions/gradle-7.5-bin.zip
+          unzip -q gradle-7.5-bin.zip -d /opt
+          echo "PATH=/opt/gradle-7.5/bin:$PATH" >> $GITHUB_ENV
+          
+          # 2. 确认预装 SDK 路径 (ubuntu-latest 默认是 /usr/local/lib/android/sdk)
+          echo "ANDROID_HOME=/usr/local/lib/android/sdk" >> $GITHUB_ENV
+          echo "ANDROID_SDK_ROOT=/usr/local/lib/android/sdk" >> $GITHUB_ENV
+          
+          # 3. 安装必要的 SDK 组件 (适配 compileSdk 33)
+          /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager \
+            "platforms;android-33" "build-tools;33.0.2" "platform-tools"
+
       - name: Build debug APK
-        run: gradle assembleDebug
-        env:
-          ANDROID_HOME: /usr/local/lib/android/sdk
-          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+        run: gradle assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
