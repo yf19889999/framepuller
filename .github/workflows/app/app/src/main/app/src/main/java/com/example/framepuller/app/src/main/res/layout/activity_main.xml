@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="视频抽帧工具"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/btnPick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="选择视频"/>
+
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="未选择视频"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp"/>
+
+        <EditText
+            android:id="@+id/etStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="起始时间（秒）"
+            android:inputType="numberDecimal"
+            android:text="0"
+            android:layout_marginTop="12dp"/>
+
+        <EditText
+            android:id="@+id/etEnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="结束时间（秒）"
+            android:inputType="numberDecimal"
+            android:text="5"
+            android:layout_marginTop="8dp"/>
+
+        <EditText
+            android:id="@+id/etFps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="每秒抽帧数（如 1、2、0.5）"
+            android:inputType="numberDecimal"
+            android:text="1"
+            android:layout_marginTop="8dp"/>
+
+        <Button
+            android:id="@+id/btnExtract"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="开始抽帧"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginTop="8dp"/>
+
+        <ImageView
+            android:id="@+id/ivPreview"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:scaleType="centerCrop"
+            android:background="#eee"/>
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="保存到相册"
+            android:layout_marginTop="12dp"/>
+
+    </LinearLayout>
+</ScrollView>
